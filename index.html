@@ -32,9 +32,7 @@ class: center, middle, inverse, title-slide
 
 * Methodology
 
-* Analytical Environment
-
-* Exploratory Data Analysis: Land of Carchemish
+* Exploratory Data Analysis
 
 * Next Steps
 
@@ -154,6 +152,199 @@ Donald E. Knuth
 &lt;/div&gt;
 
 
+---
+### where the magic happens...
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="fig/rstudio.png" alt="RStudio Interface" width="600" /&gt;
+&lt;p class="caption"&gt;RStudio Interface&lt;/p&gt;
+&lt;/div&gt;
+---
+## Tools of trade
+
+.pull-left[
+**Tools for writing code**
+* Atom - text editor
+* RStudio - R IDE
+
+** Tools for managing code**
+* git - for tracking changes to files
+* GitHub - for hosting code online
+
+**Tools for manging python env**
+* Anaconda
+
+**Tools for literate programming**
+* R Notebook
+* Jupyter Notebook and Jupyter Lab
+* rrtools - research compendium
+* workflowr
+]
+
+.pull-right[
+**DB and GIS Software**
+* PostgreSQL with PostGIS
+* QGIS 3.8
+* GRASS GIS 7.6
+* SAGA GIS 2.3
+
+** R packages for bridging R and GIS**
+* rpostgis
+* RQGIS 3
+* rgrass7
+* RSAGA
+* rgeoda
+
+**R packages for bridging R and Python**
+* reticulate
+]
+---
+## Projection
+
+
+Connect to the Database and extract layer with surveys boundaries
+
+```r
+library(DBI)
+library(rpostgis)
+library(sf)
+library(tmap)
+
+conn &lt;- RPostgreSQL::dbConnect("PostgreSQL", 
+                               host = "localhost",
+                               dbname = "michal", 
+                               user = "postgres", 
+                               password = "postgres")
+# load the survey dataset
+surveys_wgs &lt;- st_read(conn, layer = "dataset")
+```
+
+---
+## Projection
+
+Lambert conformal conic (LCC) projections for regions covering thousands of kilometers, with the cone set to keep distance and area properties reasonable between the secant lines.
+
+
+```r
+#compute a centre using sites wgs
+surveys_center = surveys_wgs %&gt;% 
+  st_union() %&gt;% # union into one geometry
+  st_centroid() %&gt;% 
+  st_transform(4326) %&gt;% 
+  st_coordinates()
+# create a lcc projection
+crs_lcc = paste0("+proj=lcc", 
+                   " +lat_0=", surveys_center[, 2],
+                   " +lon_0=", surveys_center[, 1],
+                   " +lat_1=", surveys_center[, 2])
+# reproject sites dataset to new custom projection
+surveys_lcc = st_transform(surveys_wgs, crs_lcc)
+```
+---
+
+class: middle, center
+
+## Projection
+
+![](index_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+
+---
+
+class: inverse, left, bottom
+
+# Exploratory Data Analysis
+
+---
+
+## One Size fits All
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="https://imgs.xkcd.com/comics/data_pipeline.png" alt="Source: XKCD at https://xkcd.com/2054/" width="600" /&gt;
+&lt;p class="caption"&gt;Source: XKCD at https://xkcd.com/2054/&lt;/p&gt;
+&lt;/div&gt;
+---
+
+class: left, top
+class: left, top
+
+## Land of Carchemish
+
+&lt;img src="fig/dem_rayshader.png" width="600" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="fig/dem_rayshader.png" width="600" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+
+## Land of Carchemish
+
+&lt;img src="fig/LCP_elev_map.png" width="600" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+
+## Land of Carchemish
+
+&lt;img src="fig/LCP_period_plot.png" width="600" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+
+## Land of Carchemish
+
+&lt;img src="fig/timeline.png" width="600" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+
+## Land of Carchemish
+
+&lt;img src="fig/LCP_aorist_anim.gif" width="600" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+
+## Land of Carchemish
+
+&lt;img src="fig/LCP_geom_anim.gif" width="600" height="500" style="display: block; margin: auto;" /&gt;
+---
+class: left, top
+
+## Land of Carchemish
+
+&lt;img src="fig/LCP_ann_k1_plot.png" width="600" height="500" style="display: block; margin: auto;" /&gt;
+---
+class: left, top
+
+## Land of Carchemish
+
+&lt;img src="fig/LCP_ann_k10_plot.png" width="600" height="500" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+
+## Land of Carchemish
+
+&lt;img src="fig/LCP_geom_anim.gif" width="600" height="500" style="display: block; margin: auto;" /&gt;
+---
+class: left, top
+
+## Land of Carchemish
+
+**potentials of population** - stock of population weighted by distance
+
+&lt;img src="fig/pop_potential.png" width="600" height="500" style="display: block; margin: auto;" /&gt;
+---
+class: inverse, left, bottom
+
+# Next Steps
+
+---
+class: middle, center
+
+_'The numbers have no way of speaking for themselves. We speak for them. We imbue them with meaning'_
+
+Nate Silver
 ---
 layout: false
 class: inverse, middle, center

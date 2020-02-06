@@ -20,7 +20,7 @@ library(xaringanthemer)
 mono_light(
   base_color = "#204B53",
   text_bold_color = "#914646",
-  #background_color = "white",
+  background_color = "white",
   header_font_google = google_font("Lato"),
   text_font_google   = google_font("Roboto", "400", "400"),
   code_font_google   = google_font("IBM Plex Mono"),
@@ -46,9 +46,7 @@ options(htmltools.dir.version = FALSE)
 
 * Methodology
 
-* Analytical Environment
-
-* Exploratory Data Analysis: Land of Carchemish
+* Exploratory Data Analysis
 
 * Next Steps
 
@@ -163,6 +161,222 @@ knitr::include_graphics("fig/comp_env.png")
 ```
 
 
+---
+### where the magic happens...
+
+```{r, echo=FALSE, out.width= 600, fig.cap="RStudio Interface", fig.align='center'}
+knitr::include_graphics("fig/rstudio.png")
+```
+---
+## Tools of trade
+
+.pull-left[
+**Tools for writing code**
+* Atom - text editor
+* RStudio - R IDE
+
+** Tools for managing code**
+* git - for tracking changes to files
+* GitHub - for hosting code online
+
+**Tools for manging python env**
+* Anaconda
+
+**Tools for literate programming**
+* R Notebook
+* Jupyter Notebook and Jupyter Lab
+* rrtools - research compendium
+* workflowr
+]
+
+.pull-right[
+**DB and GIS Software**
+* PostgreSQL with PostGIS
+* QGIS 3.8
+* GRASS GIS 7.6
+* SAGA GIS 2.3
+
+** R packages for bridging R and GIS**
+* rpostgis
+* RQGIS 3
+* rgrass7
+* RSAGA
+* rgeoda
+
+**R packages for bridging R and Python**
+* reticulate
+]
+---
+## Projection
+
+
+Connect to the Database and extract layer with surveys boundaries
+```{r, eval=FALSE}
+library(DBI)
+library(rpostgis)
+library(sf)
+library(tmap)
+
+conn <- RPostgreSQL::dbConnect("PostgreSQL", 
+                               host = "localhost",
+                               dbname = "michal", 
+                               user = "postgres", 
+                               password = "postgres")
+# load the survey dataset
+surveys_wgs <- st_read(conn, layer = "dataset")
+```
+
+---
+## Projection
+
+Lambert conformal conic (LCC) projections for regions covering thousands of kilometers, with the cone set to keep distance and area properties reasonable between the secant lines.
+
+```{r, eval=FALSE}
+#compute a centre using sites wgs
+surveys_center = surveys_wgs %>% 
+  st_union() %>% # union into one geometry
+  st_centroid() %>% 
+  st_transform(4326) %>% 
+  st_coordinates()
+# create a lcc projection
+crs_lcc = paste0("+proj=lcc", 
+                   " +lat_0=", surveys_center[, 2],
+                   " +lon_0=", surveys_center[, 1],
+                   " +lat_1=", surveys_center[, 2])
+# reproject sites dataset to new custom projection
+surveys_lcc = st_transform(surveys_wgs, crs_lcc)
+
+```
+---
+
+class: middle, center
+
+## Projection
+
+```{r echo=FALSE, message=TRUE, warning=TRUE, paged.print=TRUE}
+tm_shape(surveys_lcc) +
+  tm_grid() +
+  tm_polygons()
+```
+
+---
+
+class: inverse, left, bottom
+
+# Exploratory Data Analysis
+
+---
+
+## One Size fits All
+
+```{r, echo=FALSE, out.width= 600, fig.cap="Source: XKCD at https://xkcd.com/2054/", fig.align='center'}
+knitr::include_graphics("https://imgs.xkcd.com/comics/data_pipeline.png")
+```
+---
+
+class: left, top
+class: left, top
+
+## Land of Carchemish
+
+```{r, echo=FALSE, out.width= 600, fig.cap="", fig.align='center'}
+knitr::include_graphics("fig/dem_rayshader.png")
+```
+
+```{r, echo=FALSE, out.width= 600, fig.cap="", fig.align='center'}
+knitr::include_graphics("fig/dem_rayshader.png")
+```
+
+---
+class: left, top
+
+## Land of Carchemish
+
+```{r, echo=FALSE, out.width= 600, fig.cap="", fig.align='center'}
+knitr::include_graphics("fig/LCP_elev_map.png")
+```
+
+---
+class: left, top
+
+## Land of Carchemish
+
+```{r, echo=FALSE, out.width= 600, fig.cap="", fig.align='center'}
+knitr::include_graphics("fig/LCP_period_plot.png")
+```
+
+---
+class: left, top
+
+## Land of Carchemish
+
+```{r, echo=FALSE, out.width= 600, fig.cap="", fig.align='center'}
+knitr::include_graphics("fig/timeline.png")
+```
+
+---
+class: left, top
+
+## Land of Carchemish
+
+```{r, echo=FALSE, out.width= 600, fig.cap="", fig.align='center'}
+knitr::include_graphics("fig/LCP_aorist_anim.gif")
+```
+
+---
+class: left, top
+
+## Land of Carchemish
+
+```{r, echo=FALSE, out.width= 600, out.height = 500, fig.cap="", fig.align='center'}
+knitr::include_graphics("fig/LCP_geom_anim.gif")
+```
+---
+class: left, top
+
+## Land of Carchemish
+
+```{r, echo=FALSE, out.width= 600, out.height = 500, fig.cap="", fig.align='center'}
+knitr::include_graphics("fig/LCP_ann_k1_plot.png")
+```
+---
+class: left, top
+
+## Land of Carchemish
+
+```{r, echo=FALSE, out.width= 600, out.height = 500, fig.cap="", fig.align='center'}
+knitr::include_graphics("fig/LCP_ann_k10_plot.png")
+```
+
+---
+class: left, top
+
+## Land of Carchemish
+
+```{r, echo=FALSE, out.width= 600, out.height = 500, fig.cap="", fig.align='center'}
+knitr::include_graphics("fig/LCP_geom_anim.gif")
+```
+---
+class: left, top
+
+## Land of Carchemish
+
+**potentials of population** - stock of population weighted by distance
+
+```{r, echo=FALSE, out.width= 600, out.height = 500, fig.cap="", fig.align='center'}
+knitr::include_graphics("fig/pop_potential.png")
+```
+---
+class: inverse, left, bottom
+
+# Next Steps
+
+---
+class: middle, center
+
+_'The numbers have no way of speaking for themselves. We speak for them. We imbue them with meaning'_
+
+Nate Silver
 ---
 layout: false
 class: inverse, middle, center
