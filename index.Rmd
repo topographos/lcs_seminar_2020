@@ -310,7 +310,7 @@ class: left, top
 ## Land of Carchemish
 
 ```{r, echo=FALSE, out.width= 800, fig.cap="", fig.align='center'}
-knitr::include_graphics("fig/LCP_aorist_sum.png")
+knitr::include_graphics("fig/timeline.png")
 ```
 
 ---
@@ -319,7 +319,7 @@ class: left, top
 ## Land of Carchemish
 
 ```{r, echo=FALSE, out.width= 800, fig.cap="", fig.align='center'}
-knitr::include_graphics("fig/timeline.png")
+knitr::include_graphics("fig/LCP_aorist_sum.png")
 ```
 
 ---
