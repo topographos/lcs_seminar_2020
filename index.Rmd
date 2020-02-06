@@ -275,7 +275,6 @@ knitr::include_graphics("https://imgs.xkcd.com/comics/data_pipeline.png")
 ---
 
 class: left, top
-class: left, top
 
 ## Land of Carchemish
 
@@ -283,16 +282,13 @@ class: left, top
 knitr::include_graphics("fig/dem_rayshader.png")
 ```
 
-```{r, echo=FALSE, out.width= 600, fig.cap="", fig.align='center'}
-knitr::include_graphics("fig/dem_rayshader.png")
-```
 
 ---
 class: left, top
 
 ## Land of Carchemish
 
-```{r, echo=FALSE, out.width= 600, fig.cap="", fig.align='center'}
+```{r, echo=FALSE, out.width= 800, fig.cap="", fig.align='center'}
 knitr::include_graphics("fig/LCP_elev_map.png")
 ```
 
@@ -301,8 +297,18 @@ class: left, top
 
 ## Land of Carchemish
 
-```{r, echo=FALSE, out.width= 600, fig.cap="", fig.align='center'}
+```{r, echo=FALSE, out.width= 800, fig.cap="", fig.align='center'}
 knitr::include_graphics("fig/LCP_period_plot.png")
+```
+
+---
+
+class: left, top
+
+## Land of Carchemish
+
+```{r, echo=FALSE, out.width= 800, fig.cap="", fig.align='center'}
+knitr::include_graphics("fig/LCP_aorist_sum.png")
 ```
 
 ---
@@ -310,7 +316,7 @@ class: left, top
 
 ## Land of Carchemish
 
-```{r, echo=FALSE, out.width= 600, fig.cap="", fig.align='center'}
+```{r, echo=FALSE, out.width= 800, fig.cap="", fig.align='center'}
 knitr::include_graphics("fig/timeline.png")
 ```
 
@@ -348,14 +354,6 @@ class: left, top
 knitr::include_graphics("fig/LCP_ann_k10_plot.png")
 ```
 
----
-class: left, top
-
-## Land of Carchemish
-
-```{r, echo=FALSE, out.width= 600, out.height = 500, fig.cap="", fig.align='center'}
-knitr::include_graphics("fig/LCP_geom_anim.gif")
-```
 ---
 class: left, top
 
