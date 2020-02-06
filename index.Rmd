@@ -284,15 +284,7 @@ knitr::include_graphics("fig/dem_rayshader.png")
 
 
 ---
-class: left, top
 
-## Land of Carchemish
-
-```{r, echo=FALSE, out.width= 800, fig.cap="", fig.align='center'}
-knitr::include_graphics("fig/LCP_elev_map.png")
-```
-
----
 class: left, top
 
 ## Land of Carchemish
