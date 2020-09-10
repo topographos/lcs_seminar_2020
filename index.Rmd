@@ -134,7 +134,7 @@ _‘The question then becomes how best to mine, mix and otherwise analyse a pote
 class: middle, center
 ###Geographic Data Science
 
-_'a set of statistical, computational, and analytical techniques and workflows; the set of of interconnected tools developed with such applications in mind; as well as the particular epistomological perspective that sustains these practise'_ 
+_'a set of statistical, computational, and analytical techniques and workflows; the set of interconnected tools developed with such applications in mind; as well as the particular epistemological perspective that sustains these practise'_ 
   
   (Singleton and Arribas-Brl, 2019)
 
