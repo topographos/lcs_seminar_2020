@@ -1,2 +1,2 @@
-# lcs_seminar_2020
-LCS Research Seminar Presentation
+# LCS 2020
+PhD presentation for Landscape of Complex Societies Research Group at Durham University.
